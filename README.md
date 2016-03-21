@@ -13,33 +13,33 @@ Build app
 
 Configure app in ./server-config.js
 ```json
-  emailTransport: {
-		"host": '',
-		"secure": false,
-		"ignoreTLS": true,
-		"port": 25,
-		"auth": {
-			"user": "",
-			"pass": ""
-		}
-	},
-	rabbitConn: {
-		"host": "",
-		"port": "",
-		"login": "",
-		"password": "",
-		"authMechanism": "AMQPLAIN",
-		"vhost": "",
-		"noDelay": ,
-		"connectionTimeout": 1000,
-		"ssl": {
-			"enabled": false
-		}
-	},
-	mongoConn : {
-		"uri": "mongodb://localhost/mailsystem",
-		"options": {},
-	},
+emailTransport: {
+    "host": "",
+    "secure": "",
+    "ignoreTLS": "",
+    "port": "",
+    "auth": {
+        "user": "",
+        "pass": ""
+    }
+},
+rabbitConn: {
+    "host": "",
+    "port": "",
+    "login": "",
+    "password": "",
+    "authMechanism": "AMQPLAIN",
+    "vhost": "",
+    "noDelay": ,
+    "connectionTimeout": "",
+    "ssl": {
+        "enabled": ""
+    }
+},
+mongoConn : {
+    "uri": "",
+    "options": {},
+}
 ```
 
 run AMQ consumer
