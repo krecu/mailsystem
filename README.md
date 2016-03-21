@@ -1,6 +1,6 @@
-# Mosaico - Responsive Email Template Editor
+# MailSystem on mosaico ui
 
-### Mosaico
+### About mosaico
 [Mosaico Basics](https://github.com/voidlabs/mosaico/wiki)
 [Developer Notes](https://github.com/voidlabs/mosaico/wiki/Developers)
 
@@ -14,17 +14,14 @@ Build app
 Configure app in ./server-config.js
 ```json
   emailTransport: {
-		host: '',
-		secure: false, // defines if the connection should use SSL (if true) or not (if false)
-		ignoreTLS: true, // turns off STARTTLS support if true
-		port: 25, // port for secure SMTP
-		auth: {
-			user: "",
-			pass: ""
-		},
-		//tls: {
-		//    ciphers:'SSLv3'
-		//}
+		"host": '',
+		"secure": false,
+		"ignoreTLS": true,
+		"port": 25,
+		"auth": {
+			"user": "",
+			"pass": ""
+		}
 	},
 	rabbitConn: {
 		"host": "",
@@ -40,8 +37,8 @@ Configure app in ./server-config.js
 		}
 	},
 	mongoConn : {
-		uri: "mongodb://localhost/mailsystem",
-		options: {},
+		"uri": "mongodb://localhost/mailsystem",
+		"options": {},
 	},
 ```
 
