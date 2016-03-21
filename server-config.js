@@ -1,26 +1,26 @@
 // Put here your email sending configurations!
 module.exports = {
 	emailTransport: {
-		host: '185.117.153.215',
+		host: '',
 		secure: false, // defines if the connection should use SSL (if true) or not (if false)
 		ignoreTLS: true, // turns off STARTTLS support if true
 		port: 25, // port for secure SMTP
 		auth: {
-			user: "krecu",
-			pass: "b60046247b"
+			user: "",
+			pass: ""
 		},
 		//tls: {
 		//    ciphers:'SSLv3'
 		//}
 	},
 	rabbitConn: {
-		"host": "localhost",
-		"port": "5672",
-		"login": "root",
-		"password": "b60046247b",
+		"host": "",
+		"port": "",
+		"login": "",
+		"password": "",
 		"authMechanism": "AMQPLAIN",
-		"vhost": "forbes",
-		"noDelay": true,
+		"vhost": "",
+		"noDelay": ,
 		"connectionTimeout": 1000,
 		"ssl": {
 			"enabled": false
