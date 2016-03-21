@@ -1,0 +1,66 @@
+<div id="page" style="display: none;"
+     data-bind="visible: true, css: { withToolbox: $root.showToolbox, withPreviewFrame: showPreviewFrame }">
+
+    <!-- Область редатирования шаблона -->
+    <div id="main-edit-area"
+         data-bind="click: function(obj, evt) { $root.selectBlock(null); return true; }, clickBubble: false">
+        <!-- ko withProperties: { templateMode: 'wysiwyg', templateModeFallback: 'show' } -->
+        <div id="main-wysiwyg-area"
+             data-bind="wysiwygScrollfix: true, scrollable: true, fudroppable: { active: draggingImage }, css: { isdragging: dragging, isdraggingimg: draggingImage }, block: content"></div>
+        <!-- /ko -->
+    </div>
+
+    <div id="toolbar" class="mo" data-bind="tooltips: {}">
+        <!-- ko if: typeof $root.undo != 'undefined' -->
+        <span data-bind="buttonset: { }" class="leftButtons">
+        <a title="Undo last operation" href="#"
+           data-bind="attr: { title: $root.t('Undo last operation') }, click: $root.undo.execute, clickBubble: false, button: { disabled: !$root.undo.enabled(), icons: { primary: 'fa fa-reply' }, text: true }">НАЗАД</a>
+        <a title="Redo last operation" href="#"
+           data-bind="attr: { title: $root.t('Redo last operation') }, click: $root.redo.execute, clickBubble: false, button: { disabled: !$root.redo.enabled(), icons: { primary: 'fa fa-share' }, text: true }">ВПЕРЕД</a>
+        </span>
+        <!-- /ko -->
+        <input id="previewFrameToggle" type="checkbox"
+               data-bind="checked: $root.showPreviewFrame, button: { refreshOn: $root.showPreviewFrame, icons: { primary: 'fa fa-fw fa-tablet', secondary: null }, text: false }"><label
+            title="Show live preview" for="previewFrameToggle">ПРЕДПРОСМОТР</label></input>
+
+
+        <span data-bind="visible: false"><input type="checkbox" data-bind="checked: $root.showToolbox"/> toolbox</span>
+
+        <div class="rightButtons">
+            <!-- ko if: typeof $root.save !== 'undefined' -->
+            <a href="#"
+               data-bind="click: $root.save.execute, clickBubble: false, button: { disabled: !$root.save.enabled(), icons: { primary: 'fa fa-fw fa-cloud-upload' }, text: true }">СОХРАНИТЬ</a>
+            <!-- /ko -->
+        </div>
+    </div>
+
+    <!-- ko if: $root.showToolbox -->
+    <div id="main-toolbox" class="mo" data-bind="scrollable: true, withProperties: { templateMode: 'edit' }">
+        <div data-bind="template: { name: 'toolbox' }"></div>
+    </div>
+    <!-- /ko -->
+
+    <div id="main-preview" class="mo" data-bind="scrollable: true, if: $root.showPreviewFrame">
+        <div id="preview-toolbar">
+            <div data-bind="visible: $root.showPreviewFrame, buttonset: { }" style="display: inline-block">
+                <input id="previewLarge" type="radio" name="previewMode" value="large"
+                       data-bind="checked: $root.previewMode, button: { text: false, label: 'large', icons: { primary: 'fa fa-fw fa-desktop' } }"/>
+                <label for="previewLarge">large</label>
+                <input id="previewDesktop" type="radio" name="previewMode" value="desktop"
+                       data-bind="checked: $root.previewMode, button: { text: false, label: 'desktop', icons: { primary: 'fa fa-fw fa-tablet' } }"/>
+                <label for="previewDesktop">desktop</label>
+                <input id="previewMobile" type="radio" name="previewMode" value="mobile"
+                       data-bind="checked: $root.previewMode, button: { text: false, label: 'mobile', icons: { primary: 'fa fa-fw fa-mobile' } }"/>
+                <label for="previewMobile">mobile</label>
+            </div>
+        </div>
+
+        <div id="frame-container"
+             data-bind="css: { desktop: $root.previewMode() == 'desktop', mobile: $root.previewMode() == 'mobile', large: $root.previewMode() == 'large' }">
+            <iframe data-bind="bindIframe: $data"></iframe>
+        </div>
+    </div>
+
+    <div class="mo" id="mo-body"></div>
+
+</div>

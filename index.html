@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=480, initial-scale=1">
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" href="dist/vendor/notoregular/stylesheet.css"/>
+    <link rel="stylesheet" href="dist/style.css"/>
+
+    <script src="dist/vendor/knockout.js"></script>
+    <script src="dist/vendor/jquery.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="dist/script.js"></script>
+
+
+</head>
+<body>
+<header class="page-header">
+    <nav>
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">MAIL SYSTEM</a>
+                <ul id="nav-mobile" class="right">
+                    <li><a href="template.html">Шаблоны</a></li>
+                    <li><a href="index.html">Рассылки</a></li>
+                    <li><a href="#">Статистика</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <div class="section queue">
+        <div class="row container">
+            <h4 class="light">Рассылки</h4>
+            <ul id="deliveryList" class="collection" data-bind="foreach: deliveries">
+                <li class="collection-item" data-bind="attr: { id: _id + '-item' }">
+                    <a href="#open"><i class="material-icons left">mail</i><span data-bind="text: name"></span></a>
+                    <div class="right">
+                        <a class="" href="#" data-bind="click: viewModel.deliveries.start, if: status == 'stop' || status == 'new' || status == 'retry' "><i class=" material-icons">play_arrow</i></a>
+                        <a class="" href="#" data-bind="click: viewModel.deliveries.delete, if: status == 'stop' || status == 'new' || status == 'retry'"><i class=" material-icons">delete</i></a>
+                        <a class="" href="#" data-bind="click: viewModel.deliveries.stop, if: status == 'active'"><i class=" material-icons">stop</i></a>
+                        <a class="" href="#" data-bind="click: viewModel.deliveries.retry, if: status == 'end'"><i class=" material-icons">replay</i></a>
+                        <span class="state" href="#" style="display: inline-block; position: relative; top: -6px" data-bind="html: $root.getStatus($data)"></span>
+                        <div class="loader" data-bind="if: status == 'active'">
+                            <ul>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                                <li></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="container">
+            © 2014 Copyright by AC media
+            <a class="grey-text text-lighten-4 right" href="ac-media.ru">AC Media</a>
+        </div>
+    </div>
+</footer>
+
+<!-- Global button -->
+<div class="fixed-action-btn" style="bottom: 100px; right: 24px;">
+    <a class="btn-floating btn-large red">
+        <i class="large material-icons">add</i>
+    </a>
+    <ul>
+        <li><a class="btn-floating green" href="#createTheme" data-bind="click: themes.create"><i class="material-icons">dashboard</i></a></li>
+        <li><a class="btn-floating blue modal-trigger" href="#createDelivery" data-bind="click: deliveries.create"><i
+                class="material-icons">queue</i></a></li>
+    </ul>
+</div>
+
+<!-- Create delivery modal -->
+<div id="createDelivery" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h5>Новая рассылка</h5>
+
+        <div class="row">
+            <div class="s12">
+                <ul class="tabs">
+                    <li class="tab col s3"><a class="active" href="#tab-mail">Основное</a></li>
+                    <li class="tab col s3"><a href="#tab-theme">Шаблон</a></li>
+                    <li class="tab col s3"><a href="#tab-address">Адресаты</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="s12">
+                <div id="tab-mail" class="s12">
+                    <div class="row">
+                        <div class="input-field s12">
+                            <input id="delivery-name" type="text" class="validate" maxlength="255"
+                                   data-bind="value: editDeliveryName">
+                            <label for="delivery-name" data-error="wrong" data-success="right">Наименование</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field s12">
+                            <input id="delivery-email" type="email" class="validate"
+                                   data-bind="value: editDeliveryFrom">
+                            <label for="delivery-email" data-error="wrong" data-success="right">Email
+                                отправителя</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field s12">
+                            <input id="delivery-title" type="text" class="validate" length="255"
+                                   data-bind="value: editDeliveryTitle">
+                            <label for="delivery-title" data-error="wrong" data-success="right">Заголовок
+                                письма</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="tab-theme" class="s12">
+                    <div class="row">
+                        <div class="input-field s12">
+                            <select class="browser-default"
+                                    data-bind="value: editDeliveryTheme, event: { change: themes.preview }, options: themes, optionsText: 'title', optionsValue: '_id'"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div id="preview-frame"></div>
+                    </div>
+                </div>
+                <div id="tab-address" class="s12">
+                    <div class="row">
+                        <div class="input-field s12 row">
+                            <input name="emails" type="radio" id="email-external"
+                                   data-bind="event: {change: email.showExternal}"/>
+                            <label for="email-external">Удаленный</label>
+                            <input name="emails" type="radio" id="email-inner"
+                                   data-bind="event: {change: email.showList}"/>
+                            <label for="email-inner">Список</label>
+                        </div>
+                    </div>
+                    <div class="row" id="email-inner-wrapp" style="display: none">
+                        <div class="input-field s12">
+                            <textarea id="email-inner-list" class="materialize-textarea"></textarea>
+                            <label for="email-inner-list">Список</label>
+                            <a class="btn" data-bind="click: email.apply">Применить</a>
+                        </div>
+                    </div>
+                    <div class="row" id="email-external-wrapp" style="display: none">
+                        <div class="input-field s12">
+                            <input id="email-external-list" type="text" length="255" data-bind="value: emailURI">
+                            <label for="email-external-list">URI</label>
+                        </div>
+                        <a class="btn" data-bind="click: email.apply">Применить</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="/" class="waves-effect waves-green btn-flat"
+           data-bind="click: deliveries.save">Создать</a>
+    </div>
+</div>
+
+
+<!-- Create delivery modal -->
+<div id="createTheme" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h5>Новый шаблон</h5>
+        <div class="row">
+            <div class="s12">
+                <div data-bind="foreach: templates">
+                    <div class="template template-xx" data-bind="attr: { class: 'template template-'+name }">
+                        <div class="description" style="padding-bottom:5px"><b data-bind="text: name">xx</b>: <span
+                                data-bind="text: desc">xx</span></div>
+                        <a href="#"
+                           data-bind="click: $root.newEdit.bind(undefined, name), attr: { href: 'editor.html#templates/'+name+'/template-'+name+'.html' }">
+                            <img src width="100%" alt="xx" data-bind="attr: { src: 'templates/'+name+'/edres/_full.png' }">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="/" class="waves-effect waves-green btn-flat"
+           data-bind="click: deliveries.save">Создать</a>
+    </div>
+</div>
+
+</body>
+</html>

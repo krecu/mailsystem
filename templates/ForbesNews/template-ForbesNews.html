@@ -1,0 +1,767 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <style type="text/css">
+        @supports -ko-blockdefs {
+            width { label: Width; widget: integer; min: 500; max: 900; }
+            face { label: Font; widget: text; category: style; }
+            serifFace { label: Font Serif; extend: face; category: style; }
+            sansFace { label: Font Sans; extend: face; category: style; }
+            gutterWidth { label: Gutter; widget: integer; max: 40; min: 10; }
+            template { label: Template; properties: bodyWidth=660 gutterWidth=20 }
+            insertWidth { label: Inset Width; widget: integer; max: 600; min: 100; }
+            heroBlock { properties: insertWidth=340; }
+            size {
+                label: Size;
+                widget: select;
+                options: 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 18 | 20 | 22 | 25 | 28 | 31;
+            }
+
+            visible {
+                widget: boolean
+            }
+
+            color {
+                widget: color
+            }
+
+            node {
+                widget: node
+            }
+
+            text {
+                widget: text
+            }
+            url {
+                widget: url
+            }
+
+            src {
+                widget: src
+            }
+
+            contentTheme { label: Main Style; }
+            contentTheme:preview { -ko-background-color: @[backgroundColor] }
+            frameTheme {
+                label: Frame Style;
+            }
+            frameTheme:preview {
+                -ko-background-color: @ [ backgroundColor ]
+            }
+
+            /* content types */
+            blocks { label: Blocks; properties: blocks[]; }
+            link { label: Link; properties: text url }
+            image { label: Image; properties: src url alt }
+            backgroundColor { label: Background Color; extend: color }
+            buttonLink { label: Button; extend: link }
+
+            /* contents */
+            socialBlock fbVisible { label: Facebook; }
+            socialBlock twVisible { label: Twitter }
+            socialBlock vkVisible { label: VK }
+            socialBlock fbUrl { label: Facebook Link}
+            socialBlock twUrl { label: Twitter Link}
+            socialBlock vkUrl { label: VK Link}
+            socialBlock {
+                label: Ссылки на соцсети;
+                theme: contentTheme
+                properties: fbVisible=true twVisible=true vkVisible=true fbUrl=http://facebook.com/forbesrussia vkUrl=http://vk.com/forbes twUrl=http://twitter.com/forbesrussia; }
+
+            afterHeaderBlock {
+                label: Block after header;
+                theme: contentTheme
+            }
+
+            Finanz {
+                label: Finanz;
+                theme: contentTheme
+            }
+            Photogallery {
+                label: Photogallery;
+                theme: contentTheme
+            }
+            Video {
+                label: Video;
+                theme: contentTheme
+            }
+            Infographika {
+                label: Infographika;
+                theme: contentTheme
+            }
+
+            mainContent {
+                label: Материал;
+                theme: contentTheme;
+                properties: materialCategory materialTitle materialTeaser;
+            }
+            mainContent node {
+                label: Материал на сайте;
+                widget: node
+            }
+            mainContent materialImage {
+                label: Изображение;
+                widget: url
+            }
+
+
+            /** Блок материала */
+            materialBlock {
+                label: Материал;
+                theme: contentTheme;
+                properties: materialCategory materialTitle materialTeaser;
+            }
+            materialBlock node {
+                label: Материал на сайте;
+                widget: node
+            } /** Блок материала */
+            materialBlock materialUrl {
+                label: Адрес материала;
+                widget: url
+            }
+
+            materialCategory { label: Категория; extend: text}
+            materialTitle { label: Заголовок; extend: text}
+            materialTeaser { label: Описание; extend: text}
+
+            dateText{ label: Дата рассылки; extend: text;}
+            titleText{ label: Заголовок рассылки; extend: text;}
+            backgroundColor {
+                label: Background Color;
+                extend: color
+            }
+
+
+            mainContent:preview,
+            materialBlock:preview,
+            socialBlock:preview,
+            Finanz:preview ,
+            Photogallery:preview ,
+            Video:preview ,
+            Infographika:preview ,
+            socialBlock:preview,
+                -ko-background-color: @ [ backgroundColor ]
+            }
+        }
+    </style>
+    <style type="text/css" data-inline="true">
+        body {
+            Margin: 0;
+            padding: 0;
+        }
+
+        img {
+            border: 0px;
+            display: block;
+        }
+
+        /* Client-specific Styles */
+        #outlook a {
+            padding: 0;
+        }
+
+        /* Force Outlook to provide a "view in browser" button. */
+        .ReadMsgBody {
+            width: 100%;
+        }
+
+        .ExternalClass {
+            width: 100%;
+            display: block !important;
+        }
+
+        /* Force Hotmail to display emails at full width */
+        body {
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            width: 100% !important;
+        }
+
+        img {
+            outline: none;
+            text-decoration: none;
+            display: block;
+            border: 0;
+        }
+
+        br, strong br, b br, em br, i br {
+            line-height: 100%;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            -webkit-font-smoothing: antialiased;
+        }
+
+        table td, table tr {
+            border-collapse: collapse;
+        }
+
+        /* This most probably won't work in all email clients. */
+        code {
+            white-space: normal;
+            word-break: break-all;
+        }
+
+        /* Fonts and Content */
+        table.f_emal_delivery h3,
+        table.f_emal_delivery h4,
+        table.f_emal_delivery p {
+            margin: 0;
+        }
+
+        table.f_emal_delivery {
+            border-collapse: collapse;
+            background: #fff;
+            border: 1px solid #191E24;
+            margin: 16px auto;
+            font-family: Arial, "Times New Roman", Times, sans-serif;
+        }
+
+        table.f_emal_delivery .f_emal_d_top_text h3 {
+            font-family: Georgia, sans-serif;
+            font-size: 18px;
+            line-height: 20px;
+            margin-bottom: 25px;
+        }
+
+        table.f_emal_delivery .f_emal_d_top_text p {
+            font-size: 14px;
+        }
+
+        table.f_emal_delivery .f_emal_d_top_text h3 a,
+        table.f_emal_delivery .f_emal_d_top_text p a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        table.f_emal_delivery .f_emal_d_top_text a:hover {
+            text-decoration: underline;
+        }
+
+        table.f_emal_delivery img {
+            border: 0;
+            outline: none;
+            text-decoration: none;
+            display: block;
+        }
+
+        .f_emal_d_top_pic {
+            width: 254px;
+            height: 150px;
+        }
+
+        .f_emal_d_razdel {
+            width: 440px;
+            vertical-align: top;
+        }
+
+        .f_emal_d_razdel strong {
+            font-size: 13px;
+            font-family: Georgia, sans-serif;
+            background: #294D88;
+            color: #fff;
+            padding: 1px 10px 3px;
+        }
+
+        .f_emal_d_razdel div.f_hr {
+            margin: 5px 0 10px 0;
+            border-top: 1px solid #294D88;
+            height: 1px;
+            font-size: 1px;
+        }
+
+        .f_emal_d_razdel h4 {
+            font-size: 14px;
+            margin-bottom: 13px !important;
+        }
+
+        .f_emal_d_razdel p {
+            font-size: 12px;
+            color: #505050;
+            margin-bottom: 13px !important;
+        }
+
+        .f_emal_d_razdel h4 a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .f_emal_d_razdel p a {
+            color: #505050;
+            text-decoration: none;
+        }
+
+        .f_emal_d_razdel a:hover {
+            text-decoration: underline;
+        }
+
+        .f_emal_d_vid {
+            border: 1px solid #294D88;
+            margin-left: 10px;
+            margin-bottom: 22px;
+            width: 198px;
+        }
+
+        .f_emal_d_vid th {
+            background: #294D88;
+            color: #fff;
+            font-size: 13px;
+            font-family: Georgia, sans-serif;
+            text-align: left;
+            padding: 2px 0 4px 8px;
+        }
+
+        .f_emal_d_vid td {
+            padding: 10px 8px;
+            background: #F2F1F1;
+        }
+
+        .f_emal_d_vid td p {
+            font-size: 12px;
+        }
+
+        .f_emal_d_vid td p a {
+            color: #484849;
+            text-decoration: none;
+        }
+
+        .f_emal_d_vid td h5 {
+            margin: 10px 0;
+            font-size: 14px;
+            font-family: Georgia, sans-serif;
+        }
+
+        .f_emal_d_vid td h5 a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        .f_emal_d_vid td a:hover {
+            text-decoration: underline;
+        }
+
+        .f_emal_d_vid td img {
+            width: 180px;
+        }
+
+        .f_emal_d_vid.video td {
+            background: #294D88;
+            color: #fff;
+        }
+
+        .f_emal_d_vid.video td h5 a {
+            color: #fff;
+        }
+
+        .f_emal_life_a_woman th {
+            background: #294D88;
+            padding: 3px 0 5px 10px;
+            color: #fff;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        .f_emal_life_a_woman td {
+            padding: 5px 10px 15px 10px;
+        }
+
+        .f_emal_life_a_woman td img {
+            width: 254px;
+            height: 150px;
+            margin: 0 auto 10px;
+        }
+
+        .f_emal_life_a_woman td h5 {
+            font-size: 14px;
+            font-family: Georgia, sans-serif;
+            margin: 0 0 13px 0;
+        }
+
+        .f_emal_life_a_woman td p {
+            font-size: 12px;
+        }
+
+        .f_emal_life_a_woman td h5 a {
+            color: #000;
+        }
+
+        .f_emal_life_a_woman td p a {
+            color: #505050;
+        }
+
+        .f_emal_life_a_woman td h5 a,
+        .f_emal_life_a_woman td p a {
+            text-decoration: none;
+        }
+
+        .f_emal_life_a_woman td a:hover {
+            text-decoration: underline;
+        }
+
+        .f_emal_reklam h5 {
+            margin: 0 0 13px 0;
+            font-size: 14px;
+            font-family: Georgia, sans-serif;
+        }
+
+        .f_emal_reklam h5 a {
+            color: #000;
+        }
+
+        .f_emal_reklam p {
+            font-size: 12px;
+            margin-left: 90px !important;
+            width: 490px;
+        }
+
+        .f_emal_reklam p a {
+            color: #505050;
+        }
+
+        .f_emal_reklam a {
+            text-decoration: none;
+        }
+
+        .f_emal_reklam a:hover {
+            text-decoration: underline;
+        }
+
+        .f_emal_reklam img {
+            margin-right: 10px;
+        }
+
+        .f_emal_d_finanz {
+            border: 1px solid #00559B;
+            margin-left: 10px;
+            margin-bottom: 22px;
+            width: 198px;
+        }
+
+        .f_emal_d_finanz th {
+            background: #00559B;
+            color: #fff;
+            font-size: 13px;
+            font-family: Georgia, sans-serif;
+            padding-top: 6px;
+        }
+
+        .f_emal_d_finanz th img {
+            margin: 0 auto;
+        }
+
+        .f_emal_d_finanz td {
+            padding: 10px 8px;
+            background: #00559B;
+            color: #fff;
+        }
+
+        .f_emal_d_finanz td p {
+            font-size: 12px;
+        }
+
+        .f_emal_d_finanz td p a {
+            color: #484849;
+            text-decoration: none;
+        }
+
+        .f_emal_d_finanz td h5 {
+            margin: 10px 0;
+            font-size: 14px;
+            font-family: Georgia, sans-serif;
+        }
+
+        .f_emal_d_finanz td h5 a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .f_emal_d_finanz td a:hover {
+            text-decoration: underline;
+        }
+
+        .f_emal_d_finanz td img {
+            width: 180px;
+        }
+
+        /* yahoo, hotmail */
+        .ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+            line-height: 100%;
+        }
+
+        .yshortcuts a {
+            border-bottom: none !important;
+        }
+
+        .vb-outer {
+            min-width: 0 !important;
+        }
+
+        .RMsgBdy, .ExternalClass {
+            width: 100%;
+            background-color: #3f3f3f;
+        }
+
+        /* outlook */
+        table {
+            mso-table-rspace: 0pt;
+            mso-table-lspace: 0pt;
+        }
+
+        #outlook a {
+            padding: 0;
+        }
+
+        img {
+            outline: none;
+            text-decoration: none;
+            border: none;
+            -ms-interpolation-mode: bicubic;
+        }
+
+        a img {
+            border: none;
+        }
+
+        @media screen and (max-device-width: 600px), screen and (max-width: 600px) {
+            table.vb-container, table.vb-row {
+                width: 95% !important;
+            }
+
+            .mobile-hide {
+                display: none !important;
+            }
+
+            .mobile-textcenter {
+                text-align: center !important;
+            }
+
+            .mobile-full {
+                float: none !important;
+                width: 100% !important;
+                max-width: none !important;
+                padding-right: 0 !important;
+                padding-left: 0 !important;
+            }
+
+            img.mobile-full {
+                width: 100% !important;
+                max-width: none !important;
+                height: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="background-color: #ffffff;" bgcolor="#ffffff">
+<table class="f_emal_delivery" bgcolor="#ffffff" width="670" cellpadding="0" cellspacing="0" border="0"
+       style="margin: 16px auto;background-color:#ffffff; width: 670px;">
+    <tr>
+        <td style="padding: 10px;">
+
+            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100%; margin-bottom: 13px;">
+                <tr>
+                    <td style="padding-bottom: 5px;">
+                        <a href="http://www.forbes.ru/" target="_blank">
+                            <img style="float: left;"
+                                 src="http://www.forbes.ru/sites/default/modules/forbes/forbes_newsletters/theme/new/imgs/f_logo_head.png"
+                                 width="217" height="54" alt="Forbes">
+                        </a>
+                    </td>
+                    <td valign="bottom" style="padding-bottom: 5px; width: 106px; vertical-align: bottom;">
+                        <img src="http://www.forbes.ru/sites/default/modules/forbes/forbes_newsletters/theme/new/imgs/f_soc_header.png"
+                             width="106" height="28" usemap="#f_navigation_h" title="" alt=""/>
+                        <!-- socialBlock -->
+                        <map id="f_navigation_h" name="f_navigation_h" data-ko-block="socialBlock">
+                            <area data-ko-display="fbVisible" style="-ko-attr-href: @fbUrl" shape="rect" coords="0,0,28,28" target="_blank"
+                                   alt=""/>
+                            <area data-ko-display="vkVisible" style="-ko-attr-href: @vkUrl" shape="rect" coords="40,0,66,28" target="_blank"  alt=""/>
+                            <area data-ko-display="twVisible" style="-ko-attr-href: @twUrl" shape="rect" coords="79,0,106,28" target="_blank"
+                                   alt=""/>
+                        </map>
+                        <!-- /socialBlock -->
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <!-- titleBlock -->
+                        <table width="100%" data-ko-block="afterHeaderBlock">
+                            <tr>
+                                <td valign="top"
+                                    style="padding-top:2px; font-size: 12px; color: #656665; border-top: 1px solid #C6C6C6; vertical-align: top;" data-ko-editable="titleText">
+                                    Электронная рассылка по понедельникам
+                                </td>
+                                <td style="padding-top:2px; font-size: 16px; color: #656665; border-top: 1px solid #C6C6C6; text-align: right;" data-ko-editable="dateText">
+                                    Дата рассылки
+                                </td>
+                            </tr>
+                        </table>
+                        <!-- /titleBlock -->
+                    </td>
+                </tr>
+            </table>
+
+            <div data-ko-container="main" data-ko-wrap="false">
+
+                <!-- MainContent -->
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="-ko-attr-href: @node; width: 100%; margin-bottom: 13px;"
+                       data-ko-block="mainContent" >
+                    <tr>
+                        <td style="background: #294d88; padding: 1px 0 5px 14px; color: #fff; font-size: 16px; font-family: Georgia, sans-serif;"
+                            colspan="2">
+                            <strong>Главное</strong>
+                        </td>
+                    </tr>
+                    <tr style="background-color: #F2F1F1;">
+                        <td valign="top" style="padding: 10px; vertical-align: top; width:255px;">
+                            <a style="-ko-attr-href: @materialUrl;" target="_blank"><img style="-ko-attr-src: @materialImage;" class="f_emal_d_top_pic"
+                                                                                 width="254"
+                                                                                height="150" alt=""></a>
+                        </td>
+                        <td class="f_emal_d_top_text" valign="top" style="vertical-align: top; padding: 10px 0;">
+                            <h3>
+                                <a style="-ko-attr-href: @materialUrl;" data-ko-editable="materialTitle" target="_blank">[заголовок материала]</a>
+                            </h3>
+
+                            <p>
+                                <a style="-ko-attr-href: @materialUrl;" data-ko-editable="materialTeaser" target="_blank">[краткое описание]</a>
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+                <!-- /MainContent -->
+            </div>
+
+            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100%; margin-bottom: 13px;">
+                <tr>
+                    <td width="440" class="f_emal_d_razdel">
+
+                        <div data-ko-container="materials" data-ko-wrap="false">
+                            <div data-ko-block="materialBlock" style="-ko-attr-href: @node" >
+                                <strong data-ko-editable="materialCategory">[категория]</strong>
+                                <div class="f_hr"></div>
+                                <h4><a style="-ko-attr-href: @materialUrl;" target="_blank" data-ko-editable="materialTitle">[заголовок материала]</a></h4>
+                                <p><a  style="-ko-attr-href: @materialUrl;" target="_blank" data-ko-editable="materialTeaser" >[описание материала]</a></p>
+                            </div>
+                        </div>
+
+
+                    </td>
+                    <td valign="top" style="vertical-align: top;">
+                        <div data-ko-container="group" data-ko-wrap="false">
+                            <!-- Finanz -->
+                            <table class="f_emal_d_finanz finanz" data-ko-block="finanz" cellpadding="0" cellspacing="0" border="0" style="">
+                                <tr>
+                                    <th>
+                                        <a href="http://www.finanz.ru/?from=email" target="_blank">
+                                            <img src="http://www.forbes.ru/sites/default/modules/forbes/forbes_newsletters/theme/new/imgs/finanz.png"
+                                                 width="105" height="22" alt="finanz.ru"/>
+                                        </a>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="[finanz_link]" target="_blank"><img src="[finanz_image]" width="180"
+                                                                                     height="100" alt=""/></a>
+                                        <h5><a href="[finanz_link]" target="_blank">[finanz_title]</a></h5>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!--/Finanz -->
+
+                            <!-- Photogallery -->
+                            <table class="f_emal_d_vid" data-ko-block="Photogallery" cellpadding="0" cellspacing="0" border="0" style="">
+                                <tr>
+                                    <th>Фотогалерея</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="[forbes_explains_link]" target="_blank"><img src="[forbes_explains_image]"
+                                                                                              width="180" height="106"
+                                                                                              alt=""/></a>
+                                        <h5><a href="[forbes_explains_link]" target="_blank">[forbes_explains_title]</a>
+                                        </h5>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- /Photogallery -->
+
+                            <!-- Video -->
+                            <table class="f_emal_d_vid video" data-ko-block="Video" cellpadding="0" cellspacing="0" border="0" style="">
+                                <tr>
+                                    <th>Видео недели</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="[video_link]" target="_blank">
+                                            <span style="display:block; width: 180px; height: 100px; position: relative; background: url('[video_image]') no-repeat center center; background-size:180px 100px;">
+                                                <img src="http://www.forbes.ru/sites/default/modules/forbes/forbes_newsletters/theme/new/imgs/f_emal_play_video_2.png"
+                                                     width="180" height="100" alt=""/>
+                                            </span>
+                                        </a>
+                                        <h5><a href="[video_link]" target="_blank">[video_title]</a></h5>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- /Video -->
+
+                            <!-- /Infographika -->
+                            <table class="f_emal_d_vid" data-ko-block="Infographika" cellpadding="0" cellspacing="0" border="0" style="">
+                                <tr>
+                                    <th>Инфографика</th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="[infografica_link]" target="_blank"><img src="[infografica_image]"
+                                                                                          width="180" height="120" alt=""/></a>
+                                        <h5><a href="[infografica_link]" target="_blank">[infografica_title]</a></h5>
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- /Infographika -->
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+
+    <tr class="f_emal_delivery_footer"><!-- *** footer *** -->
+        <td style="padding: 12px 16px; background-color: #191e24; color: #aaaaa9; font-size: 12px;">
+            <table cellpadding="0" cellspacing="0" border="0" width="100%" style="width: 100%;">
+                <tr>
+                    <td style="width: 70px;">
+                        <a href="http://www.forbes.ru/" target="_blank"><img
+                                src="http://www.forbes.ru/sites/default/modules/forbes/forbes_newsletters/theme/new/imgs/f_logo_footer.png"
+                                alt="forbes" width="70" height="18"/></a>
+                    </td>
+                    <td style="text-align: center;">
+                        Отказаться от <a style="color: #516ea1; text-decoration: underline;" target="_blank"
+                                         href="!confirm_unsubscribe_url">рассылки</a>
+                        <img src="!statistics_image_url" width="1" height="1" style="display: inline-block">
+                    </td>
+                    <td style="width: 75px;">
+                        <img src="http://www.forbes.ru/sites/default/modules/forbes/forbes_newsletters/theme/new/imgs/f_soc_footer.png"
+                             width="75" height="18" usemap="#f_navigation_f" title="" alt=""/>
+                        <map id="f_navigation_f" name="f_navigation_f">
+                            <area shape="rect" coords="0,0,18,18" target="_blank"
+                                  href="http://facebook.com/forbesrussia" alt=""/>
+                            <area shape="rect" coords="28,0,46,18" target="_blank" href="http://vk.com/forbes" alt=""/>
+                            <area shape="rect" coords="56,0,74,18" target="_blank"
+                                  href="http://twitter.com/forbesrussia" alt=""/>
+                        </map>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+</body>
+</html>

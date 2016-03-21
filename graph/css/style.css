@@ -1,0 +1,200 @@
+body {
+    width: 1000px;
+    margin: 0 auto;
+    background: #000;
+}
+
+#tooltip {
+    margin-left: -100px;
+    position:absolute;
+    padding: 10px;
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px #ccc solid;
+    z-index: 100;
+    color: #fff;
+}
+
+#graph {
+    color: #ccc;
+    font-size: 12px;
+    font-family: Palatino, Palatino Linotype, Georgia, Times, Times New Roman, serif;
+    width: 960px;
+    padding: 0 20px;
+    position: relative;
+    background: white;
+}
+
+#description {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 300px;
+}
+
+#description ul,
+#description ul li {
+    list-style: none;
+    display: block;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    line-height: 15px;
+    color: #000;
+}
+
+#description ul.legend {
+    padding: 10px;
+}
+
+#description ul.legend li {
+    padding: 0 0 0 70px;
+    position: relative;
+}
+#description ul.legend li.head.item,
+#description ul.legend li.head {
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
+#description ul.legend li.item {
+    padding-bottom: 5px;
+}
+
+#description ul.legend li.item i {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    width: 50px;
+    height: 15px;
+    display: inline-block;
+}
+
+#description ul.legend li.blue i {
+    background: -webkit-gradient(linear, left center, right center, from(#27c4d1),color-stop(100%, #c5e4e7));
+    background: -webkit-linear-gradient(left,#27c4d1 ,#c5e4e7 100%);
+    background: linear-gradient(to right,#27c4d1 ,#c5e4e7 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FF27c4d1, endColorstr=#FFc5e4e7, GradientType=1);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF27c4d1', endColorstr='#FFc5e4e7', GradientType=1)";
+}
+
+#description ul.legend li.green i {
+    background: -webkit-gradient(linear, left center, right center, from(#df003e),color-stop(100%, #debdc6));
+    background: -webkit-linear-gradient(left,#df003e ,#debdc6 100%);
+    background: linear-gradient(to right,#df003e ,#debdc6 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFdf003e, endColorstr=#FFdebdc6, GradientType=1);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFdf003e', endColorstr='#FFdebdc6', GradientType=1)";
+}
+
+#description ul.legend li.yellow i {
+    background: -webkit-gradient(linear, left center, right center, from(#fea320),color-stop(100%, #ffdeaf));
+    background: -webkit-linear-gradient(left,#fea320 ,#ffdeaf 100%);
+    background: linear-gradient(to right,#fea320 ,#ffdeaf 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFfea320, endColorstr=#FFffdeaf, GradientType=1);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFfea320', endColorstr='#FFffdeaf', GradientType=1)";
+}
+
+
+#description .summary {
+    position: absolute;
+    top: 130px;
+    width: 280px;
+    border: 1px #ccc solid;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+#description .summary ul {
+    margin-top: -5px;
+}
+
+#description .summary li {
+    margin-top: 5px;
+}
+
+#description .summary span.name {
+    display: block;
+    font-weight: bold;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+#description .summary span.name.head {
+    font-size: 14px;
+}
+
+#description .summary span.op {
+    position: relative;
+    display: block;
+    max-width: 210px;
+    min-width: 5px;
+}
+
+#description .summary i.data {
+    font-style: normal;
+    font-weight: normal;
+    color: #8b8b8b;
+    padding-left: 5px;
+}
+
+#description .summary i.value {
+    line-height: 15px;
+    font-style: normal;
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: -55px;
+    color: #000;
+    font-weight: normal;
+}
+
+#description .summary i.color {
+    height: 15px;
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    background: #000;
+    vertical-align: top;
+}
+
+
+#description i.color.blue {
+    background: #27c4d1;
+}
+
+#description i.color.green {
+    background: #df003e
+}
+
+#description i.color.yellow {
+    background: #fea320;
+}
+
+
+
+#graph #circle circle {
+    fill: none;
+    pointer-events: all;
+}
+
+#graph path.chord {
+}
+
+#graph #circle:hover path {
+    transition: visibility 0s, opacity 0.2s linear;
+    opacity: 1;
+}
+
+#graph #circle:hover path.fade {
+    opacity: 0;
+    display: none;
+}
+
+#graph svg {
+    transform: rotate(-90deg);
+}
+
+#graph textpath {
+
+}
